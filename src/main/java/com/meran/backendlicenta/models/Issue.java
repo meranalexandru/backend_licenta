@@ -22,14 +22,15 @@ public class Issue {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String title;
-    private String issueType;
+    private String type;
     private String priority;
-    private float listPosition;
+    private Integer listPosition;
     private String description;
     private String descriptionText;
     private Integer estimate;
     private Integer timeSpent;
     private Integer timeRemaining;
+    private String status;
     @CreatedDate
     private Date createdAt;
 
@@ -51,11 +52,11 @@ public class Issue {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Issue issue = (Issue) o;
-        return Float.compare(issue.listPosition, listPosition) == 0 && id.equals(issue.id) && Objects.equals(title, issue.title) && Objects.equals(issueType, issue.issueType) && Objects.equals(priority, issue.priority) && Objects.equals(description, issue.description) && Objects.equals(descriptionText, issue.descriptionText) && Objects.equals(estimate, issue.estimate) && Objects.equals(timeSpent, issue.timeSpent) && Objects.equals(timeRemaining, issue.timeRemaining) && Objects.equals(createdAt, issue.createdAt) && Objects.equals(updatedAt, issue.updatedAt) && Objects.equals(reporterId, issue.reporterId) && Objects.equals(users, issue.users) && Objects.equals(comments, issue.comments);
+        return Float.compare(issue.listPosition, listPosition) == 0 && id.equals(issue.id) && Objects.equals(title, issue.title) && Objects.equals(type, issue.type) && Objects.equals(priority, issue.priority) && Objects.equals(description, issue.description) && Objects.equals(descriptionText, issue.descriptionText) && Objects.equals(estimate, issue.estimate) && Objects.equals(timeSpent, issue.timeSpent) && Objects.equals(timeRemaining, issue.timeRemaining) && Objects.equals(status, issue.status) && Objects.equals(createdAt, issue.createdAt) && Objects.equals(updatedAt, issue.updatedAt) && Objects.equals(reporterId, issue.reporterId) && Objects.equals(users, issue.users) && Objects.equals(comments, issue.comments);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, issueType, priority, listPosition, description, descriptionText, estimate, timeSpent, timeRemaining, createdAt, updatedAt, reporterId, users, comments);
+        return Objects.hash(id, title, type, priority, listPosition, description, descriptionText, estimate, timeSpent, timeRemaining, status, createdAt, updatedAt, reporterId, users, comments);
     }
 }

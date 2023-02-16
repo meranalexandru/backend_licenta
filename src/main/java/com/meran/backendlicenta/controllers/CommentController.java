@@ -43,4 +43,18 @@ public class CommentController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+        @PutMapping("/update-comment")
+    public ResponseEntity<Comment> updateProject(@RequestBody Comment comment) {
+        try {
+            Comment updatedComment = commentRepository.findCommentById(comment.getId());
+            updatedComment.setBody(comment.getBody());
+            updatedComment.setUpdatedAt(comment.getUpdatedAt());
+            updatedComment.setCreatedAt(comment.getCreatedAt());
+            return ResponseEntity.ok(comment);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+
+    }
 }

@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/project")
 public class ProjectController {
@@ -21,13 +23,24 @@ public class ProjectController {
 //       return projectRepository.save(project);
 //    }
 //
-//    @PutMapping("/projects")
-//    public ResponseEntity<Project> updateProject(@RequestBody Project project, @CurrentUser User currentUser) {
+
+    @GetMapping("/getCurrentUser")
+    public ResponseEntity<Project> getCurrentUser(@RequestParam Long id) {
+        Project project = projectRepository.getProjectUsersAndIssuesById(id);
+        if(project == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.ok(project);
+    }
+
+//    @PutMapping("/update-project")
+//    public ResponseEntity<Project> updateProject(@RequestBody Project project) {
 //        try {
-//            Project updatedProject = projectRepository.(currentUser.getProjectId(), project);
-//            return ResponseEntity.ok(updatedProject);
+////            Project updatedProject = projectRepository.(currentUser.getProjectId(), project);
+////            return ResponseEntity.ok(updatedProject);
 //        } catch (Exception e) {
 //            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 //        }
+//
 //    }
 }
