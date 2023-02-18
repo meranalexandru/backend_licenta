@@ -47,6 +47,10 @@ public class Issue {
     @OneToMany(mappedBy = "issue")
     private Set<Comment> comments = new HashSet<>();
 
+    @ManyToOne()
+    @JoinColumn(name="project_id")
+    private Project project;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

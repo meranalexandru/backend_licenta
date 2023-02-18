@@ -4,14 +4,15 @@ import com.meran.backendlicenta.models.Issue;
 import com.meran.backendlicenta.models.Project;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
 import java.util.Collection;
 import java.util.List;
 
 public interface ProjectRepository extends CrudRepository<Project, Long> {
 
-    public Project getProjectUsersAndIssuesById(Long id);
+    public Project findProjectById(Long id);
 
-    @Query("SELECT issues from projects where projects.id =:#{id} and issues.status = :#{status}")
-    List<Issue> getAllIssuesByProjectIdAndStatus(Integer id, String status);
+    @Query("SELECT i FROM issues i WHERE i.project.id = :projectId AND i.status = :status")
+    List<Issue> findIssueByProjectIdAndStatus(@Param("projectId") Long projectId, @Param("status") String status);
 }

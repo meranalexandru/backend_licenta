@@ -18,29 +18,35 @@ public class ProjectController {
         this.projectRepository = projectRepository;
     }
 
-//    @PostMapping("/insertProject")
-//    public Project insertProject(@RequestBody Project project) {
-//       return projectRepository.save(project);
-//    }
-//
+    @PostMapping("/insertProject")
+    public Project insertProject(@RequestBody Project project) {
+       return projectRepository.save(project);
+    }
 
-    @GetMapping("/getCurrentUser")
-    public ResponseEntity<Project> getCurrentUser(@RequestParam Long id) {
-        Project project = projectRepository.getProjectUsersAndIssuesById(id);
+
+    @GetMapping("/getCurrentProject")
+    public ResponseEntity<Project> getCurrentProject(@RequestParam Long id) {
+        Project project = projectRepository.findProjectById(id);
         if(project == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         return ResponseEntity.ok(project);
     }
 
-//    @PutMapping("/update-project")
-//    public ResponseEntity<Project> updateProject(@RequestBody Project project) {
-//        try {
-////            Project updatedProject = projectRepository.(currentUser.getProjectId(), project);
-////            return ResponseEntity.ok(updatedProject);
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-//        }
-//
-//    }
+    @PutMapping("/update-project")
+    public ResponseEntity<Project> updateProject(@RequestBody Project project) {
+        try {
+            Project updatedProject = projectRepository.findProjectById(project.getId());
+            updatedProject.setName(project.getName());
+            updatedProject.setProjectCategory(project.getProjectCategory());
+            updatedProject.setIssues(project.getIssues());
+            updatedProject.setDescription(project.getDescription());
+            updatedProject.setUsers(project.getUsers());
+            projectRepository.save(updatedProject);
+            return ResponseEntity.ok(project);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+
+    }
 }

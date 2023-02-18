@@ -24,16 +24,6 @@ public class CommentController {
         return ResponseEntity.status(HttpStatus.CREATED).body(comment);
     }
 
-    @PutMapping("/comments/{commentId}")
-    public ResponseEntity<Comment> updateComment(@PathVariable Long commentId, @RequestBody Comment comment) {
-//        try {
-//            Comment updatedComment = commentRepository.update(commentId, comment);
-//            return ResponseEntity.ok(updatedComment);
-//        } catch (Exception e) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-//        }
-//    }
-    }
     @DeleteMapping("/comments/{commentId}")
     public ResponseEntity<Comment> removeComment(@PathVariable Long commentId) {
         try {
@@ -49,8 +39,6 @@ public class CommentController {
         try {
             Comment updatedComment = commentRepository.findCommentById(comment.getId());
             updatedComment.setBody(comment.getBody());
-            updatedComment.setUpdatedAt(comment.getUpdatedAt());
-            updatedComment.setCreatedAt(comment.getCreatedAt());
             return ResponseEntity.ok(comment);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

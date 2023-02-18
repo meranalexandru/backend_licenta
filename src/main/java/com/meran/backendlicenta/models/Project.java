@@ -28,6 +28,9 @@ public class Project {
     @OneToMany(mappedBy = "project")
     private Set<User> users = new HashSet<>();
 
+    @OneToMany(mappedBy = "project")
+    private Set<Issue> issues = new HashSet<>();
+
     @CreatedDate
     private Date createdAt;
 

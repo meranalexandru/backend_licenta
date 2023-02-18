@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface IssueRepository extends CrudRepository<Issue, Long> {
 
-    public Issue findIssueByIdWithUsersAndComments(Long id);
     public Issue deleteIssueById(Long id);
 
     public Issue findIssueById(Long id);
+
 }

@@ -27,11 +27,11 @@ public class Comment {
     private LocalDateTime updatedAt;
 
     @ManyToOne()
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne()
-    @JoinColumn(name = "issue_id", nullable = false)
+    @JoinColumn(name = "issue_id")
     private Issue issue;
 
     @Override
