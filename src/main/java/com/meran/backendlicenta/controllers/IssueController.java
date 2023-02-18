@@ -1,6 +1,5 @@
 package com.meran.backendlicenta.controllers;
 
-import com.meran.backendlicenta.models.Comment;
 import com.meran.backendlicenta.models.Issue;
 import com.meran.backendlicenta.repositories.IssueRepository;
 import com.meran.backendlicenta.repositories.ProjectRepository;
@@ -32,7 +31,7 @@ public class IssueController {
         }
     }
 
-    @GetMapping("/issues/{issueId}/{status}")
+    @GetMapping("/issues/{projectId}/{status}")
     public ResponseEntity<List<Issue> > getIssueByIdAndStatus(@PathVariable Long projectId,@PathVariable String status) {
         try {
            List<Issue> issues = projectRepository.findIssueByProjectIdAndStatus(projectId,status );
@@ -57,7 +56,7 @@ public class IssueController {
     @PostMapping("/create-issue")
     public ResponseEntity<Issue> createIssue(@RequestBody Issue issue){
         try{
-            Issue newIssue = issueRepository.save(issue);
+            issueRepository.save(issue);
             return ResponseEntity.ok(issue);
         }
         catch (Exception e) {
