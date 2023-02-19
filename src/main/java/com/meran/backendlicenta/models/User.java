@@ -38,15 +38,15 @@ public class User {
     private LocalDateTime updatedAt;
 
     @ManyToOne()
-    @JoinColumn(name="project_id", nullable = true)
+    @JoinColumn(name="project_id")
     private Project project;
 
     @Nullable
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
     Set<Comment> comments = new HashSet<>();
 
     @Nullable
-    @ManyToMany(mappedBy = "users")
+    @ManyToMany(mappedBy = "users", cascade = CascadeType.PERSIST)
     Set<Issue> issues = new HashSet<>();
 
     @Override

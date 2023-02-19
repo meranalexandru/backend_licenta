@@ -25,10 +25,10 @@ public class Project {
     private String description;
     private String projectCategory;
 
-    @OneToMany(mappedBy = "project")
+    @OneToMany(mappedBy = "project", cascade = CascadeType.PERSIST)
     private Set<User> users = new HashSet<>();
 
-    @OneToMany(mappedBy = "project")
+    @OneToMany(mappedBy = "project", cascade = CascadeType.PERSIST)
     private Set<Issue> issues = new HashSet<>();
 
     @CreatedDate
