@@ -1,35 +1,49 @@
 package com.meran.backendlicenta.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Entity(name="projects")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long projectId;
     private String name;
     private String description;
     private String projectCategory;
 
-    @OneToMany(mappedBy = "project", cascade = CascadeType.PERSIST)
-    private Set<User> users = new HashSet<>();
+        @OneToMany(
+            cascade = CascadeType.ALL, fetch = FetchType.EAGER
+               )
+    @JoinColumn(
+            name = "project_id",
+            referencedColumnName = "projectId"
+    )
+    private List<User> users;
 
-    @OneToMany(mappedBy = "project", cascade = CascadeType.PERSIST)
-    private Set<Issue> issues = new HashSet<>();
+
+    @OneToMany(
+            cascade = CascadeType.ALL, fetch = FetchType.EAGER
+           )
+    @JoinColumn(
+            name = "project_id",
+            referencedColumnName = "projectId"
+    )
+    private List<Issue> issues;
+
 
     @CreatedDate
     private Date createdAt;
@@ -37,16 +51,5 @@ public class Project {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Project project = (Project) o;
-        return id.equals(project.id) && Objects.equals(name, project.name) && Objects.equals(description, project.description) && Objects.equals(projectCategory, project.projectCategory) && Objects.equals(users, project.users) && Objects.equals(createdAt, project.createdAt) && Objects.equals(updatedAt, project.updatedAt);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, description, projectCategory, users, createdAt, updatedAt);
-    }
 }

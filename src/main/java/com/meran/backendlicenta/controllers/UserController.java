@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
@@ -40,12 +42,21 @@ public class UserController {
     }
 
     @GetMapping("/getCurrentUser")
-    public ResponseEntity<User> getCurrentUser(@RequestParam Integer id) {
-        User existingUser = userRepository.findById(id);
+    public ResponseEntity<User> getCurrentUser(@RequestParam Long id) {
+        User existingUser = userRepository.findByUserId(id);
         if(existingUser == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         return ResponseEntity.ok(existingUser);
+    }
+
+    @GetMapping("/getUserByProjectId")
+    public ResponseEntity<List<User>> getAllUsers(@RequestParam Long id) {
+        List<User> users = userRepository.findAllUsersByProjectId(id);
+        if(users == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.ok(users);
     }
 
 }

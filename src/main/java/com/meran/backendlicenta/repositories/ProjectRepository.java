@@ -8,11 +8,15 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 public interface ProjectRepository extends CrudRepository<Project, Long> {
 
-    public Project findProjectById(Long id);
+    public Project findProjectByProjectId(Long id);
 
-    @Query("SELECT i FROM issues i WHERE i.project.id = :projectId AND i.status = :status")
-    List<Issue> findIssueByProjectIdAndStatus(@Param("projectId") Long projectId, @Param("status") String status);
+//    @Query("SELECT p FROM projects p WHERE i.projects.projectId = :projectId AND i.status = :status")
+//    List<Issue> findIssueByProjectIdAndStatus(@Param("projectId") Long projectId, @Param("status") String status);
+//
+//    @Query("SELECT p FROM projects p LEFT JOIN FETCH p.issues WHERE p.id = :projectId")
+//    Project findByIdWithIssues(@Param("projectId") Long projectId);
 }

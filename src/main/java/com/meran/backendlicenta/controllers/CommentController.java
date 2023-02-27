@@ -27,22 +27,22 @@ public class CommentController {
     @DeleteMapping("/comments/{commentId}")
     public ResponseEntity<Comment> removeComment(@PathVariable Long commentId) {
         try {
-            Comment deletedComment = commentRepository.deleteCommentById(commentId);
+            Comment deletedComment = commentRepository.deleteCommentByCommentId(commentId);
             return ResponseEntity.ok(deletedComment);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
-        @PutMapping("/update-comment")
-    public ResponseEntity<Comment> updateProject(@RequestBody Comment comment) {
-        try {
-            Comment updatedComment = commentRepository.findCommentById(comment.getId());
-            updatedComment.setBody(comment.getBody());
-            return ResponseEntity.ok(comment);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-
-    }
+//        @PutMapping("/update-comment")
+//    public ResponseEntity<Comment> updateProject(@RequestBody Comment comment) {
+//        try {
+//            Comment updatedComment = commentRepository.findCommentById(comment.getId());
+//            updatedComment.setBody(comment.getBody());
+//            return ResponseEntity.ok(comment);
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//        }
+//
+//    }
 }
