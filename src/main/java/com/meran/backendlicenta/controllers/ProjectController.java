@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @RestController
@@ -33,34 +35,58 @@ public class ProjectController {
         if(project == null){
              return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
+        project.setCreatedAt(LocalDate.now());
+        project.setUpdatedAt(LocalDateTime.now());
         projectRepository.save(project);
         return ResponseEntity.ok(project);
         }
 
 
     @GetMapping("/getCurrentProject")
-    public ResponseEntity<Project> getCurrentProject(@RequestParam Long id) {
-        Project project = projectRepository.findProjectByProjectId(id);
-        if(project == null){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    public ResponseEntity<Project> getCurrentProject(@RequestParam Long projectId) {
+        Optional<Project> optionalProject = projectRepository.findById(projectId);
+        if (optionalProject.isPresent()) {
+            Project project = optionalProject.get();
+            return ResponseEntity.ok(project);
+        } else {
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(project);
     }
+
+//    @PutMapping("/update-project")
+//    public ResponseEntity<Project> updateProject(@RequestBody Project project) {
+//            Optional<Project> optionalProject = projectRepository.findById(project.getProjectId());
+//            if (optionalProject.isPresent()) {
+//                Project updatedProject = optionalProject.get();
+//                updatedProject.setName(project.getName());
+//                updatedProject.setProjectCategory(project.getProjectCategory());
+//                updatedProject.setIssues(project.getIssues());
+//                updatedProject.setDescription(project.getDescription());
+//                updatedProject.setUsers(project.getUsers());
+//                projectRepository.save(updatedProject);
+//                return ResponseEntity.ok(updatedProject);
+//            } else {
+//                return ResponseEntity.notFound().build();
+//            }
+//
+//    }
 
     @PutMapping("/update-project")
-    public ResponseEntity<Project> updateProject(@RequestBody Project project) {
-        try {
-            Project updatedProject = projectRepository.findProjectByProjectId(project.getProjectId());
-            updatedProject.setName(project.getName());
-            updatedProject.setProjectCategory(project.getProjectCategory());
-            updatedProject.setIssues(project.getIssues());
-            updatedProject.setDescription(project.getDescription());
-            updatedProject.setUsers(project.getUsers());
-            projectRepository.save(updatedProject);
-            return ResponseEntity.ok(project);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    public ResponseEntity<Project> updateProject(@RequestParam Long projectId, @RequestBody Project project) {
+        Optional<Project> optionalProject = projectRepository.findById(projectId);
+        if (optionalProject.isPresent()) {
+            Project existingProject = optionalProject.get();
+            existingProject.setName(project.getName());
+            existingProject.setDescription(project.getDescription());
+            existingProject.setProjectCategory(project.getProjectCategory());
+            existingProject.setUsers(project.getUsers());
+            existingProject.setIssues(project.getIssues());
+            existingProject.setUpdatedAt(LocalDateTime.now());
+            projectRepository.save(existingProject);
+            return ResponseEntity.ok(existingProject);
+        } else {
+            return ResponseEntity.notFound().build();
         }
-
     }
+
 }

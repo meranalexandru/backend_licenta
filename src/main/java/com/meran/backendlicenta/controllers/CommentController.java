@@ -7,6 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api/comment")
 public class CommentController {
@@ -19,7 +23,8 @@ public class CommentController {
 
     @PostMapping("/create-comment")
     public ResponseEntity<Comment> signup(@RequestBody Comment comment) {
-
+        comment.setCreatedAt(LocalDate.now());
+        comment.setUpdatedAt(LocalDateTime.now());
         commentRepository.save(comment);
         return ResponseEntity.status(HttpStatus.CREATED).body(comment);
     }
@@ -34,15 +39,17 @@ public class CommentController {
         }
     }
 
-//        @PutMapping("/update-comment")
-//    public ResponseEntity<Comment> updateProject(@RequestBody Comment comment) {
-//        try {
-//            Comment updatedComment = commentRepository.findCommentById(comment.getId());
-//            updatedComment.setBody(comment.getBody());
-//            return ResponseEntity.ok(comment);
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-//        }
-//
-//    }
+    @PutMapping("/update-comment")
+    public ResponseEntity<Comment> updateComment(@RequestParam Long commentId, @RequestBody Comment updatedComment) {
+        Optional<Comment> optionalComment = commentRepository.findById(commentId);
+        if (optionalComment.isPresent()) {
+            Comment comment = optionalComment.get();
+            comment.setBody(updatedComment.getBody());
+            comment.setUpdatedAt(LocalDateTime.now());
+            commentRepository.save(comment);
+            return ResponseEntity.ok(comment);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

@@ -5,9 +5,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -29,10 +32,10 @@ public class User {
         this.password = password;
     }
 
-    @CreatedDate
-    private Date createdAt;
+    @CreationTimestamp
+    private LocalDate createdAt;
 
-    @LastModifiedDate
+    @UpdateTimestamp
     private LocalDateTime updatedAt;
 
 
@@ -63,9 +66,6 @@ public class User {
     )
     private List<Issue> issues;
 
-    @ManyToOne
-    @JoinColumn(name = "project_id")
-    private Project project;
 
     public void addIssue(Issue issue){
         if(issues == null){

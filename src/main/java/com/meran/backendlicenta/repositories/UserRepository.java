@@ -16,6 +16,6 @@ public interface UserRepository extends CrudRepository<User, Long> {
 //    @Query("select u from users u where u.project.projectId = ?1")
 //    public List<User> getUsersByProjectId(Long projectId);
 
-    List<User> findAllUsersByProjectId(Long projectId);
+//    List<User> findAllUsersByProjectId(Long projectId);
 
 }

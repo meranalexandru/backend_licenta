@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -56,6 +58,8 @@ public class IssueController {
     @PostMapping("/create-issue")
     public ResponseEntity<Issue> createIssue(@RequestBody Issue issue){
         try{
+            issue.setCreatedAt(LocalDate.now());
+            issue.setUpdatedAt(LocalDateTime.now());
             issueRepository.save(issue);
             return ResponseEntity.ok(issue);
         }

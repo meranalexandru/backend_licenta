@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public interface ProjectRepository extends CrudRepository<Project, Long> {
 
-    public Project findProjectByProjectId(Long id);
+     public Project findProjectByProjectId(Long projectId);
 
 //    @Query("SELECT p FROM projects p WHERE i.projects.projectId = :projectId AND i.status = :status")
 //    List<Issue> findIssueByProjectIdAndStatus(@Param("projectId") Long projectId, @Param("status") String status);
