@@ -12,8 +12,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 @Entity(name="issues")
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Issue {
@@ -47,5 +46,7 @@ public class Issue {
     )
     private List<Comment> comments;
 
-
+//    @ManyToMany(mappedBy = "users")
+//    @JsonBackReference
+//    private List<User> users;
 }

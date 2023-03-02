@@ -14,8 +14,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity(name="projects")
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Project {
@@ -26,12 +25,20 @@ public class Project {
     private String description;
     private String projectCategory;
 
-        @OneToMany(
-            cascade = CascadeType.ALL, fetch = FetchType.EAGER
-               )
-    @JoinColumn(
-            name = "project_id",
-            referencedColumnName = "projectId"
+    @ManyToMany(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER
+    )
+    @JoinTable(
+            name = "team_map",
+            joinColumns = @JoinColumn(
+                    name="project_id",
+                    referencedColumnName = "projectId"
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "user_id",
+                    referencedColumnName = "userId"
+            )
     )
     private List<User> users;
 

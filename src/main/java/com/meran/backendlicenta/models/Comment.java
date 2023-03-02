@@ -12,8 +12,7 @@ import java.util.Date;
 import java.util.Objects;
 
 @Entity(name="comments")
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Comment {

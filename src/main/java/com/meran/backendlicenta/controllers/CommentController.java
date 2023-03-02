@@ -3,6 +3,7 @@ package com.meran.backendlicenta.controllers;
 import com.meran.backendlicenta.models.Comment;
 import com.meran.backendlicenta.models.User;
 import com.meran.backendlicenta.repositories.CommentRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,15 +29,26 @@ public class CommentController {
         commentRepository.save(comment);
         return ResponseEntity.status(HttpStatus.CREATED).body(comment);
     }
-
-    @DeleteMapping("/comments/{commentId}")
-    public ResponseEntity<Comment> removeComment(@PathVariable Long commentId) {
-        try {
-            Comment deletedComment = commentRepository.deleteCommentByCommentId(commentId);
-            return ResponseEntity.ok(deletedComment);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    @GetMapping("/get-comment")
+    public ResponseEntity<Comment> getComment(@RequestParam Long commentId) {
+        Optional<Comment> optionalComment = commentRepository.findById(commentId);
+        if (optionalComment.isPresent()) {
+            Comment comment = optionalComment.get();
+            return ResponseEntity.ok(comment);
+        } else {
+            return ResponseEntity.notFound().build();
         }
+    }
+    @Transactional
+    @DeleteMapping("/delete-comment")
+    public ResponseEntity<Comment> removeComment(@RequestParam Long commentId) {
+        Optional<Comment> optionalComment = commentRepository.findByCommentId(commentId);
+        if (!optionalComment.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        Comment comment = optionalComment.get();
+        commentRepository.delete(comment);
+        return ResponseEntity.ok(comment);
     }
 
     @PutMapping("/update-comment")

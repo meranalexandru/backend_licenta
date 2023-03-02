@@ -2,6 +2,7 @@ package com.meran.backendlicenta.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
@@ -15,8 +16,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 @Entity(name="users")
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {
@@ -64,8 +64,11 @@ public class User {
                     referencedColumnName = "issueId"
             )
     )
+    @JsonManagedReference
     private List<Issue> issues;
 
+//    @ManyToMany(mappedBy = "users")
+//    private List<Project> projects;
 
     public void addIssue(Issue issue){
         if(issues == null){

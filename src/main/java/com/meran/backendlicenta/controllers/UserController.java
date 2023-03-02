@@ -52,14 +52,6 @@ public class UserController {
         }
         return ResponseEntity.ok(existingUser);
     }
-
-//    @GetMapping("/getUserByProjectId")
-//    public ResponseEntity<List<User>> getAllUsers(@RequestParam Long id) {
-//        List<User> users = userRepository.findAllUsersByProjectId(id);
-//        if(users == null){
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-//        }
-//        return ResponseEntity.ok(users);
-//    }
+    
 
 }
