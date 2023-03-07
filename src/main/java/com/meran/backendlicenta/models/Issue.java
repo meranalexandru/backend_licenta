@@ -11,10 +11,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
-@Entity(name="issues")
+@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "issues")
 public class Issue {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -46,7 +47,4 @@ public class Issue {
     )
     private List<Comment> comments;
 
-//    @ManyToMany(mappedBy = "users")
-//    @JsonBackReference
-//    private List<User> users;
 }

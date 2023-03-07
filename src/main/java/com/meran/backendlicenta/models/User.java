@@ -15,10 +15,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
-@Entity(name="users")
+@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -64,11 +65,12 @@ public class User {
                     referencedColumnName = "issueId"
             )
     )
-    @JsonManagedReference
     private List<Issue> issues;
 
-//    @ManyToMany(mappedBy = "users")
-//    private List<Project> projects;
+    @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonIgnore
+    private List<Project> projects;
+
 
     public void addIssue(Issue issue){
         if(issues == null){

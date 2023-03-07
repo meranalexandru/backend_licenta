@@ -13,6 +13,8 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     public User findByUserId(Long id);
 
+    User findUserByName(String name);
+
 //    @Query("select u from users u where u.project.projectId = ?1")
 //    public List<User> getUsersByProjectId(Long projectId);
 

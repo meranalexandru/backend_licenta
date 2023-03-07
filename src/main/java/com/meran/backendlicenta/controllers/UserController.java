@@ -1,5 +1,6 @@
 package com.meran.backendlicenta.controllers;
 
+import com.meran.backendlicenta.models.Project;
 import com.meran.backendlicenta.models.User;
 import com.meran.backendlicenta.repositories.UserRepository;
 import org.springframework.http.HttpStatus;
@@ -51,6 +52,15 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         return ResponseEntity.ok(existingUser);
+    }
+
+    @GetMapping("/getUserProjects")
+    public ResponseEntity<List<Project>> getUserProjects(@RequestParam Long id) {
+        User existingUser = userRepository.findByUserId(id);
+        if(existingUser == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.ok(existingUser.getProjects());
     }
     
 

@@ -11,10 +11,11 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
 
-@Entity(name="comments")
+@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "comments")
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
